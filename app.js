@@ -70,6 +70,9 @@ app.get("/oauth/callback", async (req, res) => {
 
     const { tokens } = await oauth2Client.getToken(code);
     savedTokens = tokens;
+    if (tokens.refresh_token) {
+  console.log("NEW_REFRESH_TOKEN:", tokens.refresh_token);
+}
 
     res.send("OAuth success. Tokens saved. Check /health (authed=true).");
   } catch (err) {
