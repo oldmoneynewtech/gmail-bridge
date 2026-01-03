@@ -7,8 +7,16 @@ app.use(express.json());
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // used by /run-sweep
-const SWEEP_SECRET = process.env.SWEEP_SECRET;     // used by /run-sweep auth
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const SWEEP_SECRET = process.env.SWEEP_SECRET;
+const GOOGLE_REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
+let savedTokens = null;
+// ✅ If a refresh token exists, auto-auth on startup (no manual /oauth/authorize needed)
+if (GOOGLE_REFRESH_TOKEN) {
+  savedTokens = { refresh_token: GOOGLE_REFRESH_TOKEN };
+  oauth2Client.setCredentials(savedTokens);
+}
+
 
 const REDIRECT_URI = `${BASE_URL}/oauth/callback`;
 
