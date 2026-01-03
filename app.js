@@ -32,13 +32,12 @@ app.get("/health", (req, res) => {
 // 1) Start OAuth: send you to Google login/consent
 app.get("/oauth/authorize", (req, res) => {
   const scopes = [
-    // Draft-only permission
-    "https://www.googleapis.com/auth/gmail.compose"
+    "https://www.googleapis.com/auth/gmail.modify"
   ];
 
   const url = oauth2Client.generateAuthUrl({
-    access_type: "offline", // requests refresh token
-    prompt: "consent",      // forces refresh token issuance in many cases
+    access_type: "offline",
+    prompt: "consent",
     scope: scopes
   });
 
